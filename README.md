@@ -1,11 +1,11 @@
 ### What's this?
 
-This is a sample slack-ruby-bot-server with ActiveRecord.
+This is a simple wfh bot for Slack.
 
 ### Run
 
 ```
 bundle install
 rake db:create db:migrate
-rackup
+foreman start
 ```
