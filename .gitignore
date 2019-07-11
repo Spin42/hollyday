@@ -1,0 +1,4 @@
+.env
+.rspec
+.standalone_migrations
+Gemfile.lock
