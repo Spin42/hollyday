@@ -2,7 +2,9 @@ require "awesome_print"
 
 class Wfh < SlackRubyBot::Commands::Base
   command "wfh"
+  command "WFH"
   match(/wfh$*(?<expression>.*)$/)
+  match(/WFH$*(?<expression>.*)$/)
 
   def self.call(client, data, _match)
     wfh_day = _match[:expression].strip.split(" ")[0].try(:gsub,",","")
@@ -36,7 +38,7 @@ class Wfh < SlackRubyBot::Commands::Base
         as_user: true)
     else
       begin
-        day_of_the_week = Date.parse(weekday_name).cwday
+        day_of_the_week = Date.parse(wfh_day).cwday
       rescue Exception => e
         webclient.chat_postEphemeral(
           user: data.user,
