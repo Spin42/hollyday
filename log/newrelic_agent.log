@@ -1942,3 +1942,87 @@
 [2019-07-15 22:22:58 +0200 iMac-de-Marc.local (98110)] INFO : Installing Rack::Builder middleware instrumentation
 [2019-07-15 22:22:58 +0200 iMac-de-Marc.local (98110)] INFO : Finished instrumentation
 [2019-07-15 22:22:58 +0200 iMac-de-Marc.local (98110)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Environment: development
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Dispatcher: unicorn
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing Net instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Finished instrumentation
+[2019-07-15 22:38:18 +0200 iMac-de-Marc.local (98740)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Environment: development
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Dispatcher: unicorn
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing Net instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Finished instrumentation
+[2019-07-15 22:42:20 +0200 iMac-de-Marc.local (98872)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Environment: development
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Dispatcher: unicorn
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing Net instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Finished instrumentation
+[2019-07-15 22:50:40 +0200 iMac-de-Marc.local (99074)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Environment: development
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Dispatcher: unicorn
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing Net instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Finished instrumentation
+[2019-07-15 22:53:26 +0200 iMac-de-Marc.local (99115)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Environment: development
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Dispatcher: unicorn
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing Net instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Finished instrumentation
+[2019-07-15 22:54:06 +0200 iMac-de-Marc.local (99164)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Environment: development
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Dispatcher: unicorn
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing Net instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Finished instrumentation
+[2019-07-15 22:55:51 +0200 iMac-de-Marc.local (99194)] INFO : Doing deferred dependency-detection before Rack startup
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Environment: development
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Dispatcher: unicorn
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Application: SlackRubyBotServer
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] WARN : Agent configured not to send data in this environment.
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing SlackRubyBot instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing New Relic supported Grape instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing notifications based Active Record instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing Net instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing deferred Rack::Builder instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Installing Rack::Builder middleware instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Finished instrumentation
+[2019-07-15 22:56:05 +0200 iMac-de-Marc.local (99238)] INFO : Doing deferred dependency-detection before Rack startup

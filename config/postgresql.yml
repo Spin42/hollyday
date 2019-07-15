@@ -6,7 +6,7 @@ default: &default
 
 development:
   <<: *default
-  database: holyday_development
+  database: hollyday_development
 
 production:
   <<: *default

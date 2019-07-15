@@ -2,6 +2,7 @@ ENV['RACK_ENV'] ||= 'development'
 
 Bundler.require :default
 
+require_relative 'service'
 require_relative 'models'
 require_relative 'commands'
 require_relative 'api'
