@@ -16,14 +16,17 @@ module Api
           if payload["actions"][0]["name"] == "wfh_confirm"
             date = Date.parse(payload["actions"][0]["value"])
             date_is_today = (Date.today == date)
-            if Leave.where(team_id: team_id,
+            existing_leaves = Leave.where(team_id: team_id,
               user_id: user_id,
               leave_type: "wfh",
               start_date: date,
-              end_date: date).any?
+              end_date: date)
+
+            if existing_leaves.any?
               status 200
-              payload["attachments"] = []
-              payload["text"] = "Well, it seems I have already written it down!"
+              {
+                text: ":spiral_calendar_pad: Well, it seems I have already written it down!"
+              }
             else
               Leave.create(team_id: team_id,
                 user_id: user_id,
@@ -31,13 +34,15 @@ module Api
                 start_date: date,
                 end_date: date)
               status 200
-              payload["attachments"] = []
-              payload["text"] = "Gotcha! I've written it down."
+              {
+                text: ":white_check_mark: Gotcha! I've written it down."
+              }
             end
           else
             status 200
-            payload["attachments"] = []
-            payload["text"] = "Second thoughts? No problem, let me know if anything changes."
+            {
+              text: ":sweat_smile: Second thoughts? No problem, let me know if anything changes."
+            }
           end
         end
       end

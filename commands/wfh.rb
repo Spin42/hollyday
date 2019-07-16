@@ -30,22 +30,19 @@ class Wfh < SlackRubyBot::Commands::Base
         user: data.user,
         channel: data.channel,
         text: "Here's what's happening during the next days:",
-        attachments: self.summary_attachments(wfhs),
-        as_user: true)
+        attachments: self.summary_attachments(wfhs))
     when "today"
       webclient.chat_postEphemeral(
         user: data.user,
         channel: data.channel,
         text: "You're working from home today",
-        attachments: self.attachments(Date.today),
-        as_user: true)
+        attachments: self.attachments(Date.today))
     when "tomorrow"
       webclient.chat_postEphemeral(
         user: data.user,
         channel: data.channel,
         text: "You're working from home tomorrow",
-        attachments: self.attachments(Date.today+1.day),
-        as_user: true)
+        attachments: self.attachments(Date.today+1.day))
     else
       begin
         day_of_the_week = Date.parse(wfh_day).cwday
@@ -60,7 +57,7 @@ class Wfh < SlackRubyBot::Commands::Base
           user: data.user,
           channel: data.channel,
           text: "You're working from home on #{closest_day.strftime('%A %B %d')}",
-          attachments: self.attachments(closest_day), as_user: true)
+          attachments: self.attachments(closest_day))
         end
     end
   end
