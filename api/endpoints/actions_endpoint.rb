@@ -22,14 +22,8 @@ module Api
               start_date: date,
               end_date: date).any?
               status 200
-              {
-                "user": user_id,
-                "channel": channel_id,
-                "attachments": [],
-                "replace_original": true,
-                "as_user": true,
-                "text": "Well, it seems I have already written it down!"
-              }
+              payload["attachments"] = []
+              payload["text"] = "Well, it seems I have already written it down!"
             else
               Leave.create(team_id: team_id,
                 user_id: user_id,
@@ -37,25 +31,13 @@ module Api
                 start_date: date,
                 end_date: date)
               status 200
-              {
-                "user": user_id,
-                "channel": channel_id,
-                "attachments": [],
-                "replace_original": true,
-                "as_user": true,
-                "text": "Gotcha! I've written it down."
-              }
+              payload["attachments"] = []
+              payload["text"] = "Gotcha! I've written it down."
             end
           else
             status 200
-            {
-              "user": user_id,
-              "channel": channel_id,
-              "attachments": [],
-              "replace_original": true,
-              "as_user": true,
-              "text": "Second thoughts? No problem, let me know if anything changes."
-            }
+            payload["attachments"] = []
+            payload["text"] = "Second thoughts? No problem, let me know if anything changes."
           end
         end
       end
