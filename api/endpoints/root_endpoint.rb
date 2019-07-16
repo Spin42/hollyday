@@ -1,6 +1,7 @@
 module Api
   module Endpoints
     class RootEndpoint < Grape::API
+      include Api::Helpers::ErrorHelpers
       prefix 'api'
 
       format :json
