@@ -6,7 +6,8 @@ Commands
 
 help                           - get this helpful message
 wfh [today|tomorrow|monday...] - log when you are working from home
-wfh summary                    - shows wfh notices for next days
+pto|off from dd/mm to dd/mm    - log your personal time off
+summary                        - shows summary for next 10 calendar days
 
 ```
   EOS

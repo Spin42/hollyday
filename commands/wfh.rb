@@ -21,16 +21,6 @@ class Wfh < SlackRubyBot::Commands::Base
     end
 
     case wfh_day
-    when "summary"
-      wfhs = Entry.where(
-        team_id: data.team,
-        start_date: Date.today..(Date.today+5.days))
-
-      webclient.chat_postMessage(
-        user: data.user,
-        channel: data.channel,
-        text: "Here's what's happening during the next days:",
-        attachments: self.summary_attachments(wfhs))
     when "today"
       webclient.chat_postEphemeral(
         user: data.user,
@@ -94,23 +84,6 @@ class Wfh < SlackRubyBot::Commands::Base
 			  ]
 	    }
 	  ]
-  end
-
-  def self.summary_attachments wfhs
-    attachments = []
-    (Date.today..(Date.today+5.days)).each do |date|
-      relevant_wfhs = wfhs.select{|wfh| wfh.start_date == date}
-      user_ids = relevant_wfhs.map{|wfh| "<@#{wfh.user_id}>"}
-      if user_ids.any?
-        attachments << {
-          "fallback": "List of team members wfh on #{date.strftime("%A %B %d")}",
-          "color": "#cccccc",
-          "title": ":house_with_garden: #{date.strftime("%A %B %d")}",
-          "text": user_ids.join(" ")
-        }
-      end
-    end
-    return attachments
   end
 
   def self.post_ErrorMessage(webclient, user, channel, message)
