@@ -1,1 +1,1 @@
-require_relative "models/leave"
+require_relative "models/entry"

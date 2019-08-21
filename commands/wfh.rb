@@ -22,7 +22,7 @@ class Wfh < SlackRubyBot::Commands::Base
 
     case wfh_day
     when "summary"
-      wfhs = Leave.where(
+      wfhs = Entry.where(
         team_id: data.team,
         start_date: Date.today..(Date.today+5.days))
 

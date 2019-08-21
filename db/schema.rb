@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 20190710193527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "leaves", force: :cascade do |t|
+  create_table "entries", force: :cascade do |t|
     t.string   "team_id"
     t.string   "user_id"
-    t.string   "leave_type"
+    t.string   "entry_type"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at", null: false

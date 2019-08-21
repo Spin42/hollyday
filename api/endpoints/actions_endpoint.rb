@@ -16,21 +16,21 @@ module Api
           if payload["actions"][0]["name"] == "wfh_confirm"
             date = Date.parse(payload["actions"][0]["value"])
             date_is_today = (Date.today == date)
-            existing_leaves = Leave.where(team_id: team_id,
+            existing_entries = Entry.where(team_id: team_id,
               user_id: user_id,
-              leave_type: "wfh",
+              entry_type: "wfh",
               start_date: date,
               end_date: date)
 
-            if existing_leaves.any?
+            if existing_entries.any?
               status 200
               {
                 text: ":spiral_calendar_pad: Well, it seems I have already written it down!"
               }
             else
-              Leave.create(team_id: team_id,
+              Entry.create(team_id: team_id,
                 user_id: user_id,
-                leave_type: "wfh",
+                entry_type: "wfh",
                 start_date: date,
                 end_date: date)
               status 200
