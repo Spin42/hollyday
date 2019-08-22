@@ -10,6 +10,7 @@ gem 'slack-ruby-bot-server'
 gem 'unicorn'
 gem 'dotenv'
 gem "json"
+gem "rake"
 
 group :development, :test do
   gem 'standalone_migrations', '~> 5.2'
@@ -20,7 +21,6 @@ group :test do
   gem 'database_cleaner'
   gem 'fabrication'
   gem 'faker'
-  gem 'rake'
   gem 'rspec'
   gem 'vcr'
   gem 'webmock'
