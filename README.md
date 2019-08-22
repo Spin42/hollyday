@@ -20,3 +20,9 @@ summary                        - shows summary for next 10 calendar days
 ```
 
 Holly also reacts to the wfh command by listening on any channels she was invited to.
+
+### Contributing
+Just fork it and send pull requests. We will review them.
+
+### License
+[MIT](https://github.com/Spin42/hollyday/blob/master/LICENSE)
