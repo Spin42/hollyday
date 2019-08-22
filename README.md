@@ -1,6 +1,6 @@
 ### What's this?
 
-This is a simple wfh bot for Slack.
+This is a simple pto and wfh bot for multiple Slack teams.
 
 ### Run
 
