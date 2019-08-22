@@ -66,7 +66,6 @@ class Off < SlackRubyBot::Commands::Base
     webclient.chat_postEphemeral(
       user: user,
       channel: channel,
-      text: message,
-      as_user: true)
+      text: message)
   end
 end

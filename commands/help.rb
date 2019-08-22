@@ -12,7 +12,7 @@ summary                        - shows summary for next 10 calendar days
 ```
   EOS
   def self.call(client, data, _match)
-    client.say(channel: data.channel, text: HELP)
+    client.say(channel: data.channel, text: HELP, as_user: false)
     logger.info "HELP: #{client.owner}, user=#{data.user}"
   end
 end
