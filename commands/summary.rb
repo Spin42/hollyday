@@ -1,4 +1,4 @@
-class Off < SlackRubyBot::Commands::Base
+class Summary < SlackRubyBot::Commands::Base
   command "summary"
 
   def self.call(client, data, _match)
