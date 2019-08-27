@@ -1,8 +1,6 @@
 class Off < SlackRubyBot::Commands::Base
   command "off"
   command "pto"
-  match(/off$*(?<expression>.*)$/)
-  match(/pto$*(?<expression>.*)$/)
 
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first

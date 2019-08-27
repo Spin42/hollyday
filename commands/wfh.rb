@@ -3,8 +3,6 @@ require "awesome_print"
 class Wfh < SlackRubyBot::Commands::Base
   command "wfh"
   command "WFH"
-  match(/wfh$*(?<expression>.*)$/)
-  match(/WFH$*(?<expression>.*)$/)
 
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first
