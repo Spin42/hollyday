@@ -7,7 +7,8 @@ Commands
 help                           - get this helpful message
 wfh [today|tomorrow|monday...] - log when you are working from home
 pto from dd/mm to dd/mm        - log your personal time off
-summary                        - shows summary for next 10 calendar days
+summary [wfh|pto|@user]        - shows summary for next 10 calendar days for type or user
+entries                        - list your entries and allows you to delete them
 
 ```
   EOS

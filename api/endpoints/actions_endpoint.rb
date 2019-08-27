@@ -22,6 +22,37 @@ module Api
             dates = JSON.parse(payload["actions"][0]["value"])
             status 200
             Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", dates[0], dates[1])
+          elsif payload["actions"][0]["name"] == "entry_delete"
+            entry_hash = JSON.parse(payload["actions"][0]["value"])
+            entry = Entry.where(id: entry_hash["id"], user_id: entry_hash["user_id"]).first()
+            entry.destroy if !entry.nil?
+
+            team = Team.where(team_id: team_id).first
+            webclient = Slack::Web::Client.new(token: team.token)
+
+            emojis = {"wfh": ":house_with_garden:", "pto": ":palm_tree:"}
+
+            attachments = payload["original_message"]["attachments"]
+            deleted_attachment = attachments.find{|attachment| JSON.parse(attachment["actions"][0]["value"]) == entry_hash}
+
+            attachments.delete(deleted_attachment)
+            replacement_attachment = {
+              "id": deleted_attachment["id"],
+              "fallback": "Deleted #{emojis[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
+              "color": "#ff0000",
+              "title": "Deleted #{emojis[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
+              "callback_id": "entries_management",
+              "text": "From #{entry.start_date.strftime("%A %B %d")} to #{entry.end_date.strftime("%A %B %d")}"
+            }
+            attachments << replacement_attachment
+
+            webclient.chat_update(
+              channel: channel_id,
+              ts: payload["original_message"]["ts"],
+              attachments: attachments
+            )
+            status 204
+            ""
           else
             status 200
             {
