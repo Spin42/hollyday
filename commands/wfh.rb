@@ -1,5 +1,3 @@
-require "awesome_print"
-
 class Wfh < SlackRubyBot::Commands::Base
   command "wfh"
   command "WFH"
