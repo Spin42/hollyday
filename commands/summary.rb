@@ -5,15 +5,38 @@ class Summary < SlackRubyBot::Commands::Base
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
 
-    entries = Entry.where(
-      team_id: data.team,
-      start_date: Date.today..(Date.today+10.days))
-    webclient.chat_postMessage(
-      user: data.user,
-      channel: data.channel,
-      text: "Here's what's happening during the next days:",
-      attachments: self.summary_attachments(entries))
+    if _match[:expression]
+      target_user_id = _match[:expression].scan(/\@(\w+)/)
+    end
 
+    if ["pto", "wfh"].include?(_match[:expression])
+      entries = Entry.where(
+        team_id: data.team,
+        entry_type: _match[:expression],
+        start_date: Date.today..(Date.today+10.days))
+    elsif !target_user_id.nil?
+      entries = Entry.where(
+        team_id: data.team,
+        user_id: target_user_id,
+        start_date: Date.today..(Date.today+10.days))
+    else
+      entries = Entry.where(
+        team_id: data.team,
+        start_date: Date.today..(Date.today+10.days))
+    end
+
+    if entries.any?
+      webclient.chat_postMessage(
+        user: data.user,
+        channel: data.channel,
+        text: "Here's what's happening during the next days:",
+        attachments: self.summary_attachments(entries))
+    else
+      webclient.chat_postMessage(
+        user: data.user,
+        channel: data.channel,
+        text: "Looks like there is nothing planned for the next few days...")
+    end
   end
 
   private
