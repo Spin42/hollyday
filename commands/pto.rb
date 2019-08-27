@@ -1,6 +1,6 @@
 class Off < SlackRubyBot::Commands::Base
-  command "off"
   command "pto"
+  command "PTO"
 
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first
