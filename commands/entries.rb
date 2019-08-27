@@ -8,7 +8,7 @@ class Entries < SlackRubyBot::Commands::Base
     entries = Entry.where(
       team_id: data.team,
       user_id: data.user).where(
-      "start_date <= ? AND end_date >= ?", Date.today, Date.today)
+      "(start_date >= ? OR end_date >= ?)", Date.today, Date.today)
 
     if entries.any?
       webclient.chat_postMessage(
