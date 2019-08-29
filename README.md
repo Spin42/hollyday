@@ -15,8 +15,9 @@ You may address to Holly directly by using @ in a channel she was invited to or 
 ```
 help                           - get this helpful message
 wfh [today|tomorrow|monday...] - log when you are working from home
-pto|off from dd/mm to dd/mm    - log your personal time off
-summary                        - shows summary for next 10 calendar days
+pto from dd/mm to dd/mm        - log your personal time off
+summary [wfh|pto|@user]        - shows summary for next 10 calendar days for type or user
+entries                        - list your entries and allows you to delete them
 ```
 
 Holly also reacts to the wfh command by listening on any channels she was invited to.
