@@ -8,7 +8,6 @@ class Wfh < SlackRubyBot::Commands::Base
 
     begin
       wfh_day = _match[:expression].scan(/\b(monday|tuesday|wednesday|thursday|friday|tomorrow|today|\d{1,2}\/\d{1,2})\b/)[0][0]
-      puts wfh_day.inspect
     rescue Exception => e
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
@@ -33,10 +32,8 @@ class Wfh < SlackRubyBot::Commands::Base
     else
       begin
         if !(wfh_day =~ /\d{1,2}\/\d{1,2}/).nil?
-          puts Date::strptime(wfh_day,"%d/%m").inspect
           day = Date::strptime(wfh_day,"%d/%m")
         else
-          puts Date.parse(wfh_day).inspect
           day = Date.parse(wfh_day)
         end
       rescue Exception => e
