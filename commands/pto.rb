@@ -5,12 +5,11 @@ class Off < SlackRubyBot::Commands::Base
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
-    from, to = nil
 
     begin
       dates = _match[:expression].scan(/(\d{1,2}\/\d{1,2})/)
       from = Date::strptime(dates[0][0],"%d/%m")
-      to   = Date::strptime(dates[1][0],"%d/%m")
+      to   = Date::strptime(dates[1][0],"%d/%m") if dates.size > 1
     rescue Exception => e
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
@@ -25,6 +24,12 @@ class Off < SlackRubyBot::Commands::Base
           channel: data.channel,
           text: "You're taking some personal time off from #{from.strftime("%d/%m/%Y")} to #{to.strftime("%d/%m/%Y")} :palm_tree:",
           attachments: self.attachments([from, to]))
+    elsif !from.nil? && to.nil?
+      webclient.chat_postEphemeral(
+          user: data.user,
+          channel: data.channel,
+          text: "You're taking some personal time on #{from.strftime("%d/%m/%Y")} :palm_tree:",
+          attachments: self.attachments([from, from]))
     else
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
