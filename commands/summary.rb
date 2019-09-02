@@ -4,32 +4,39 @@ class Summary < SlackRubyBot::Commands::Base
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
+    matches = []
 
     if _match[:expression]
-      target_user_id = _match[:expression].scan(/\@(\w+)/)
+      matches = _match[:expression].scan(/(pto|wfh)|\@(\w+)|(january|february|march|april|may|june|july|august|september|october|november|december)/)
+    end
+    query_parameters = {}
+
+    if matches.any?
+      matches.each do |match|
+        if ["pto", "wfh"].include?(match[0])
+          query_parameters[:entry_type] = match[0]
+        end
+        if !match[1].nil?
+          query_parameters[:user_id] = match[1]
+        end
+        if !match[2].nil?
+          query_parameters[:start_date] = Date.parse(match[2])..(Date.parse(match[2])+1.month)
+        end
+      end
+
+      if query_parameters[:start_date].nil?
+        query_parameters[:start_date] = Date.today..(Date.today+10.days)
+      end
     end
 
-    if ["pto", "wfh"].include?(_match[:expression])
-      entries = Entry.where(
-        team_id: data.team,
-        entry_type: _match[:expression],
-        start_date: Date.today..(Date.today+10.days))
-    elsif !target_user_id.nil?
-      entries = Entry.where(
-        team_id: data.team,
-        user_id: target_user_id,
-        start_date: Date.today..(Date.today+10.days))
-    else
-      entries = Entry.where(
-        team_id: data.team,
-        start_date: Date.today..(Date.today+10.days))
-    end
+    query_parameters.merge({team_id: data.team})
+    entries = Entry.where(query_parameters).order(:start_date)
 
     if entries.any?
       webclient.chat_postMessage(
         user: data.user,
         channel: data.channel,
-        text: "Here's what's happening during the next days:",
+        text: "Here's what's happening:",
         attachments: self.summary_attachments(entries))
     else
       webclient.chat_postMessage(

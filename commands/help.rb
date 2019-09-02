@@ -5,9 +5,9 @@ Commands
 --------
 
 help                                 - get this helpful message
-wfh [today|tomorrow|monday...|dd/mm] - log when you are working from home
+wfh [today|tomorrow|weekday|dd/mm]   - log when you are working from home
 pto from dd/mm to dd/mm              - log your personal time off
-summary [wfh|pto|@user]              - shows summary for next 10 calendar days for type or user
+summary [wfh|pto|@user|month]        - shows summary for next 10 calendar days for type or user
 entries                              - list your entries and allows you to delete them
 
 ```
