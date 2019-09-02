@@ -7,7 +7,8 @@ class Wfh < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     begin
-      wfh_day = _match[:expression].strip.split(" ")[0].try(:gsub,",","")
+      wfh_day = _match[:expression].scan(/\b(monday|tuesday|wednesday|thursday|friday|tomorrow|today|\d{1,2}\/\d{1,2})\b/)[0][0]
+      puts wfh_day.inspect
     rescue Exception => e
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
@@ -31,19 +32,28 @@ class Wfh < SlackRubyBot::Commands::Base
         attachments: self.attachments(Date.today+1.day))
     else
       begin
-        day_of_the_week = Date.parse(wfh_day).cwday
+        if !(wfh_day =~ /\d{1,2}\/\d{1,2}/).nil?
+          puts Date::strptime(wfh_day,"%d/%m").inspect
+          day = Date::strptime(wfh_day,"%d/%m")
+        else
+          puts Date.parse(wfh_day).inspect
+          day = Date.parse(wfh_day)
+        end
       rescue Exception => e
         self.post_ErrorMessage(
           webclient, data.user, data.channel,
-          ":thinking_face: Please use today, tomorrow, or any day of the week..."
+          ":thinking_face: Please use today, tomorrow, or any day of the week... #{e.message}"
         )
       else
-        closest_day = self.closest_day(day_of_the_week)
+        if day <= Date.today
+          day = self.closest_day(day.cwday)
+        end
+
         webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're working from home on #{closest_day.strftime('%A %B %d')}",
-          attachments: self.attachments(closest_day))
+          text: "You're working from home on #{day.strftime('%A %B %d')}",
+          attachments: self.attachments(day))
         end
     end
   end
