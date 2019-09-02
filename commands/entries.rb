@@ -9,6 +9,7 @@ class Entries < SlackRubyBot::Commands::Base
       team_id: data.team,
       user_id: data.user).where(
       "(start_date >= ? OR end_date >= ?)", Date.today, Date.today)
+      .order(:start_date)
 
     if entries.any?
       webclient.chat_postMessage(
@@ -34,7 +35,7 @@ class Entries < SlackRubyBot::Commands::Base
         "color": "#cccccc",
         "title": "#{emojis[:"#{entry.entry_type}"]} #{entry.entry_type}",
         "callback_id": "entries_management",
-        "text": "From #{entry.start_date.strftime("%A %B %d")} to #{entry.end_date.strftime("%A %B %d")}",
+        "text": self.text(entry.start_date, entry.end_date),
         "actions": [
             {
               "name": "entry_delete",
@@ -46,6 +47,14 @@ class Entries < SlackRubyBot::Commands::Base
         ]
       }
       attachments
+    end
+  end
+
+  def self.text start_date, end_date
+    if start_date == end_date
+      "On #{start_date.strftime("%A %B %d")}"
+    else
+      "From #{start_date.strftime("%A %B %d")} to #{end_date.strftime("%A %B %d")}"
     end
   end
 end

@@ -40,7 +40,7 @@ module Api
               "color": "#ff0000",
               "title": "Deleted #{emojis[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
               "callback_id": "entries_management",
-              "text": "From #{entry.start_date.strftime("%A %B %d")} to #{entry.end_date.strftime("%A %B %d")}"
+              "text": Api::Endpoints::ActionsEndpoint.text(entry.start_date, entry.end_date)
             }
             attachments[deleted_attachment_index] = replacement_attachment
 
@@ -83,6 +83,14 @@ module Api
           {
             text: ":white_check_mark: Gotcha! I've written it down."
           }
+        end
+      end
+
+      def self.text start_date, end_date
+        if start_date == end_date
+          "On #{start_date.strftime("%A %B %d")}"
+        else
+          "From #{start_date.strftime("%A %B %d")} to #{end_date.strftime("%A %B %d")}"
         end
       end
     end
