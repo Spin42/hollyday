@@ -28,12 +28,11 @@ class Entries < SlackRubyBot::Commands::Base
   private
 
   def self.entries_attachments entries
-    emojis = {"wfh": ":house_with_garden:", "pto": ":palm_tree:"}
     entries.inject([]) do |attachments, entry|
       attachments << {
-        "fallback": "#{emojis[:"#{entry.entry_type}"]} #{entry.entry_type}",
+        "fallback": "#{MessageUtils::EMOJIS[:"#{entry.entry_type}"]} #{entry.entry_type}",
         "color": "#cccccc",
-        "title": "#{emojis[:"#{entry.entry_type}"]} #{entry.entry_type}",
+        "title": "#{MessageUtils::EMOJIS[:"#{entry.entry_type}"]} #{entry.entry_type}",
         "callback_id": "entries_management",
         "text": self.text(entry.start_date, entry.end_date),
         "actions": [
@@ -52,9 +51,9 @@ class Entries < SlackRubyBot::Commands::Base
 
   def self.text start_date, end_date
     if start_date == end_date
-      "On #{start_date.strftime("%A %B %d")}"
+      "On #{start_date.strftime(DateUtils::LONG_FORMAT)}"
     else
-      "From #{start_date.strftime("%A %B %d")} to #{end_date.strftime("%A %B %d")}"
+      "From #{start_date.strftime(DateUtils::LONG_FORMAT)} to #{end_date.strftime(DateUtils::LONG_FORMAT)}"
     end
   end
 end

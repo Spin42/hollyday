@@ -8,8 +8,8 @@ class Off < SlackRubyBot::Commands::Base
 
     begin
       dates = _match[:expression].scan(Regexp::DATES)
-      from = Date::strptime(dates[0][0],"%d/%m")
-      to   = Date::strptime(dates[1][0],"%d/%m") if dates.size > 1
+      from = Date::strptime(dates[0][0], DateUtils::SHORT_FORMAT)
+      to   = Date::strptime(dates[1][0], DateUtils::SHORT_FORMAT) if dates.size > 1
     rescue Exception => e
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
@@ -22,13 +22,13 @@ class Off < SlackRubyBot::Commands::Base
       webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're taking some personal time off from #{from.strftime("%d/%m/%Y")} to #{to.strftime("%d/%m/%Y")} :palm_tree:",
+          text: "You're taking some personal time off from #{from.strftime(DateUtils::LONG_FORMAT)} to #{to.strftime(DateUtils::LONG_FORMAT)} :palm_tree:",
           attachments: self.attachments([from, to]))
     elsif !from.nil? && to.nil?
       webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're taking some personal time on #{from.strftime("%d/%m/%Y")} :palm_tree:",
+          text: "You're taking some personal time on #{from.strftime(DateUtils::LONG_FORMAT)} :palm_tree:",
           attachments: self.attachments([from, from]))
     else
       self.post_ErrorMessage(

@@ -29,16 +29,15 @@ module Api
             team = Team.where(team_id: team_id).first
             webclient = Slack::Web::Client.new(token: team.token)
 
-            emojis = {"wfh": ":house_with_garden:", "pto": ":palm_tree:"}
             attachments = payload["original_message"]["attachments"]
             deleted_attachment = attachments.find{|attachment| attachment.key?("actions") && JSON.parse(attachment["actions"][0]["value"]) == entry_hash}
             deleted_attachment_index = attachments.index(deleted_attachment)
 
             replacement_attachment = {
               "id": deleted_attachment["id"],
-              "fallback": "Deleted #{emojis[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
+              "fallback": "Deleted #{MessageUtils::EMOJIS[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
               "color": "#ff0000",
-              "title": "Deleted #{emojis[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
+              "title": "Deleted #{MessageUtils::EMOJIS[:"#{entry_hash["entry_type"]}"]} #{entry_hash["entry_type"]}",
               "callback_id": "entries_management",
               "text": Api::Endpoints::ActionsEndpoint.text(entry.start_date, entry.end_date)
             }

@@ -52,14 +52,13 @@ class Summary < SlackRubyBot::Commands::Base
     (range).each do |date|
       relevant_entries = entries.select{|entry| entry.start_date <= date && entry.end_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type]}
-      emojis = {"wfh": ":house_with_garden:", "pto": ":palm_tree:"}
 
       if users.any?
         attachments << {
-          "fallback": "List of team members having an entry on #{date.strftime("%A %B %d")}",
+          "fallback": "List of team members having an entry on #{date.strftime(DateUtils::LONG_FORMAT)}",
           "color": "#cccccc",
-          "title": date.strftime("%A %B %d"),
-          "text": users.map{|user| "#{emojis[:"#{user[1]}"]} #{user[0]}"}.join(" ")
+          "title": date.strftime(DateUtils::LONG_FORMAT),
+          "text": users.map{|user| "#{MessageUtils::EMOJIS[:"#{user[1]}"]} #{user[0]}"}.join(" ")
         }
       end
     end

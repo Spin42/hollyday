@@ -31,8 +31,8 @@ class Wfh < SlackRubyBot::Commands::Base
         attachments: self.attachments(Date.today+1.day))
     else
       begin
-        if !(wfh_day =~ /\d{1,2}\/\d{1,2}/).nil?
-          day = Date::strptime(wfh_day,"%d/%m")
+        if !(wfh_day =~ Regexp::DATES).nil?
+          day = Date::strptime(wfh_day, DateUtils::SHORT_FORMAT)
         else
           day = Date.parse(wfh_day)
         end
@@ -43,27 +43,19 @@ class Wfh < SlackRubyBot::Commands::Base
         )
       else
         if day <= Date.today
-          day = self.closest_day(day.cwday)
+          day = DateUtils.closest_day(day.cwday)
         end
 
         webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're working from home on #{day.strftime('%A %B %d')}",
+          text: "You're working from home on #{day.strftime(DateUtils::LONG_FORMAT)}",
           attachments: self.attachments(day))
         end
     end
   end
 
   private
-  def self.closest_day(day_of_the_week, date=Date.today)
-    if day_of_the_week > date.cwday
-      date + (day_of_the_week - date.cwday)
-    else
-      date + 7 - (date.cwday - day_of_the_week)
-    end
-  end
-
   def self.attachments date
     return [
       {
