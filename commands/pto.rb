@@ -5,18 +5,15 @@ class Pto < SlackRubyBot::Commands::Base
   ENTRY_TYPE = "pto"
 
   def self.call(client, data, _match)
-    team = Team.where(team_id: data.team).first
+    team      = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
 
     begin
       dates = _match[:expression].scan(Regexp::DATES)
-      from = Date::strptime(dates[0][0], DateUtils::SHORT_FORMAT)
-      to   = Date::strptime(dates[1][0], DateUtils::SHORT_FORMAT) if dates.size > 1
+      from  = Date::strptime(dates[0][0], DateUtils::SHORT_FORMAT)
+      to    = Date::strptime(dates[1][0], DateUtils::SHORT_FORMAT) if dates.size > 1
     rescue Exception => e
-      self.post_ErrorMessage(
-        webclient, data.user, data.channel,
-        ":thinking_face: Please ask me for 'help' if you don't know how to book pto..."
-      )
+      self.fail webclient, data.user, data.channel
       return
     end
 
@@ -33,14 +30,19 @@ class Pto < SlackRubyBot::Commands::Base
           text: "You're taking some personal time on #{from.strftime(DateUtils::LONG_FORMAT)} #{MessageUtils.emoji_for(ENTRY_TYPE)}",
           attachments: self.attachments([from, from]))
     else
-      self.post_ErrorMessage(
-        webclient, data.user, data.channel,
-        ":thinking_face: Please ask me for 'help' if you don't know how to book pto..."
-      )
+      self.fail webclient, data.user, data.channel
     end
   end
 
   private
+
+  def self.fail webclient, user, channel
+    webclient.chat_postEphemeral(
+      user: user,
+      channel: channel,
+      text: ":thinking_face: Please ask me for 'help' if you don't know how to book pto..."
+    )
+  end
 
   def self.attachments dates
     return [
@@ -65,12 +67,5 @@ class Pto < SlackRubyBot::Commands::Base
 			  ]
 	    }
 	  ]
-  end
-
-  def self.post_ErrorMessage(webclient, user, channel, message)
-    webclient.chat_postEphemeral(
-      user: user,
-      channel: channel,
-      text: message)
   end
 end
