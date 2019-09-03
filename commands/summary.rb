@@ -2,9 +2,10 @@ class Summary < SlackRubyBot::Commands::Base
   command "summary"
 
   def self.call(client, data, _match)
-    team = Team.where(team_id: data.team).first
-    webclient = Slack::Web::Client.new(token: team.token)
-    matches = []
+    team       = Team.where(team_id: data.team).first
+    webclient  = Slack::Web::Client.new(token: team.token)
+    date_range = Date.today..(Date.today+10.days)
+    matches    = []
 
     if _match[:expression]
       matches = _match[:expression].scan(/(pto|wfh)|\@(\w+)|(january|february|march|april|may|june|july|august|september|october|november|december)/)
@@ -20,13 +21,11 @@ class Summary < SlackRubyBot::Commands::Base
           query_parameters[:user_id] = match[1]
         end
         if !match[2].nil?
-          query_parameters[:start_date] = Date.parse(match[2])..(Date.parse(match[2])+1.month)
+          date_range = Date.parse(match[2])..(Date.parse(match[2])+1.month)
         end
       end
 
-      if query_parameters[:start_date].nil?
-        query_parameters[:start_date] = Date.today..(Date.today+10.days)
-      end
+      query_parameters[:start_date] = date_range
     end
 
     query_parameters.merge({team_id: data.team})
@@ -37,7 +36,7 @@ class Summary < SlackRubyBot::Commands::Base
         user: data.user,
         channel: data.channel,
         text: "Here's what's happening:",
-        attachments: self.summary_attachments(entries))
+        attachments: self.summary_attachments(entries, date_range))
     else
       webclient.chat_postMessage(
         user: data.user,
@@ -48,9 +47,9 @@ class Summary < SlackRubyBot::Commands::Base
 
   private
 
-  def self.summary_attachments entries
+  def self.summary_attachments entries, range
     attachments = []
-    (Date.today..(Date.today+10.days)).each do |date|
+    (range).each do |date|
       relevant_entries = entries.select{|entry| entry.start_date <= date && entry.end_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type]}
       emojis = {"wfh": ":house_with_garden:", "pto": ":palm_tree:"}
