@@ -9,10 +9,7 @@ class Wfh < SlackRubyBot::Commands::Base
     begin
       wfh_day = _match[:expression].scan(Regexp::DAYS_AND_DATES)[0][0]
     rescue Exception => e
-      self.post_ErrorMessage(
-        webclient, data.user, data.channel,
-        ":thinking_face: Please use today, tomorrow, or any day of the week..."
-      )
+      self.fail webclient, data.user, data.channel
       return
     end
 
@@ -37,10 +34,7 @@ class Wfh < SlackRubyBot::Commands::Base
           day = Date.parse(wfh_day)
         end
       rescue Exception => e
-        self.post_ErrorMessage(
-          webclient, data.user, data.channel,
-          ":thinking_face: Please use today, tomorrow, or any day of the week... #{e.message}"
-        )
+        self.fail webclient, data.user, data.channel
       else
         if day <= Date.today
           day = DateUtils.closest_day(day.cwday)
@@ -56,6 +50,14 @@ class Wfh < SlackRubyBot::Commands::Base
   end
 
   private
+  def self.fail webclient, user, channel
+    webclient.chat_postEphemeral(
+      user: user,
+      channel: channel,
+      text: ":thinking_face: Please use today, tomorrow, or any day of the week..."
+    )
+  end
+
   def self.attachments date
     return [
       {
@@ -79,12 +81,5 @@ class Wfh < SlackRubyBot::Commands::Base
 			  ]
 	    }
 	  ]
-  end
-
-  def self.post_ErrorMessage(webclient, user, channel, message)
-    webclient.chat_postEphemeral(
-      user: user,
-      channel: channel,
-      text: message)
   end
 end
