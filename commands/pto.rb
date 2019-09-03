@@ -2,6 +2,8 @@ class Off < SlackRubyBot::Commands::Base
   command "pto"
   command "PTO"
 
+  ENTRY_TYPE = "pto"
+
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
@@ -22,13 +24,13 @@ class Off < SlackRubyBot::Commands::Base
       webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're taking some personal time off from #{from.strftime(DateUtils::LONG_FORMAT)} to #{to.strftime(DateUtils::LONG_FORMAT)} :palm_tree:",
+          text: "You're taking some personal time off from #{from.strftime(DateUtils::LONG_FORMAT)} to #{to.strftime(DateUtils::LONG_FORMAT)} #{MessageUtils.emoji_for(ENTRY_TYPE)}",
           attachments: self.attachments([from, to]))
     elsif !from.nil? && to.nil?
       webclient.chat_postEphemeral(
           user: data.user,
           channel: data.channel,
-          text: "You're taking some personal time on #{from.strftime(DateUtils::LONG_FORMAT)} :palm_tree:",
+          text: "You're taking some personal time on #{from.strftime(DateUtils::LONG_FORMAT)} #{MessageUtils.emoji_for(ENTRY_TYPE)}",
           attachments: self.attachments([from, from]))
     else
       self.post_ErrorMessage(

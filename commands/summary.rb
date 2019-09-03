@@ -58,7 +58,7 @@ class Summary < SlackRubyBot::Commands::Base
           "fallback": "List of team members having an entry on #{date.strftime(DateUtils::LONG_FORMAT)}",
           "color": "#cccccc",
           "title": date.strftime(DateUtils::LONG_FORMAT),
-          "text": users.map{|user| "#{MessageUtils::EMOJIS[:"#{user[1]}"]} #{user[0]}"}.join(" ")
+          "text": users.map{|user| "#{MessageUtils.emoji_for(user[1])} #{user[0]}"}.join(" ")
         }
       end
     end
