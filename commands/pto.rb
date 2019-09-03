@@ -1,4 +1,4 @@
-class Off < SlackRubyBot::Commands::Base
+class Pto < SlackRubyBot::Commands::Base
   command "pto"
   command "PTO"
 
