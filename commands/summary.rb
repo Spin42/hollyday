@@ -8,7 +8,7 @@ class Summary < SlackRubyBot::Commands::Base
     matches    = []
 
     if _match[:expression]
-      matches = _match[:expression].scan(/(pto|wfh)|\@(\w+)|(january|february|march|april|may|june|july|august|september|october|november|december)/)
+      matches = _match[:expression].scan(Regexp::ENTRY_TYPE_AND_MONTHS)
     end
     query_parameters = {}
 

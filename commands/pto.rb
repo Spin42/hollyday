@@ -7,7 +7,7 @@ class Off < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     begin
-      dates = _match[:expression].scan(/(\d{1,2}\/\d{1,2})/)
+      dates = _match[:expression].scan(Regexp::DATES)
       from = Date::strptime(dates[0][0],"%d/%m")
       to   = Date::strptime(dates[1][0],"%d/%m") if dates.size > 1
     rescue Exception => e

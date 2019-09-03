@@ -7,7 +7,7 @@ class Wfh < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     begin
-      wfh_day = _match[:expression].scan(/\b(monday|tuesday|wednesday|thursday|friday|tomorrow|today|\d{1,2}\/\d{1,2})\b/)[0][0]
+      wfh_day = _match[:expression].scan(Regexp::DAYS_AND_DATES)[0][0]
     rescue Exception => e
       self.post_ErrorMessage(
         webclient, data.user, data.channel,
