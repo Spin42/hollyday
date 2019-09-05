@@ -14,10 +14,13 @@ foreman start
 You may address to Holly directly by using @ in a channel she was invited to or in direct message with the following commands:
 ```
 help                                - get this helpful message
-wfh [today|tomorrow|weekday|dd/mm]  - log when you are working from home
-pto [from] dd/mm [to dd/mm]         - log your personal time off
+wfh [arguments]                     - log when you are working from home
+pto [arguments]                     - log your personal time off
+sick [arguments]                    - log your sick leave
 summary [wfh|pto|@user|month]       - shows summary for next 10 calendar days for type or user
 entries                             - list your entries and allows you to delete them
+
+[arguments] can be [tomorrow|today|monday|tuesday|...] or a single or range of dates [dd/mm]
 ```
 
 Holly also reacts to the wfh command by listening on any channels she was invited to.
