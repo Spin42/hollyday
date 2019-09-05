@@ -1,6 +1,6 @@
-class Pto < SlackRubyBot::Commands::Base
-  command "pto"
-  command "PTO"
+class Sick < SlackRubyBot::Commands::Base
+  command "sick"
+  command "SICK"
 
   def self.call(client, data, _match)
     team      = Team.where(team_id: data.team).first
@@ -17,7 +17,7 @@ class Pto < SlackRubyBot::Commands::Base
       end
     end
 
-    PtoMessage.render(
+    SickMessage.render(
       webclient: webclient,
       user: data.user,
       channel: data.channel,

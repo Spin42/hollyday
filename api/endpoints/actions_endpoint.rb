@@ -21,6 +21,10 @@ module Api
             dates = JSON.parse(payload["actions"][0]["value"])
             status 200
             Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", dates[0], dates[1])
+          elsif payload["actions"][0]["name"] == "sick_confirm"
+            dates = JSON.parse(payload["actions"][0]["value"])
+            status 200
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", dates[0], dates[1])
           elsif payload["actions"][0]["name"] == "entry_delete"
             entry_hash = JSON.parse(payload["actions"][0]["value"])
             entry = Entry.where(id: entry_hash["id"], user_id: entry_hash["user_id"]).first()
