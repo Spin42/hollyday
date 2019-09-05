@@ -14,10 +14,9 @@ module Api
           channel_id = payload["channel"]["id"]
 
           if payload["actions"][0]["name"] == "wfh_confirm"
-            date = Date.parse(payload["actions"][0]["value"])
-            date_is_today = (Date.today == date)
+            dates = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", date, date)
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", dates[0], dates[1])
           elsif payload["actions"][0]["name"] == "pto_confirm"
             dates = JSON.parse(payload["actions"][0]["value"])
             status 200

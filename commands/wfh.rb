@@ -6,80 +6,22 @@ class Wfh < SlackRubyBot::Commands::Base
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
 
-    begin
-      wfh_day = _match[:expression].scan(Regexp::DAYS_AND_DATES)[0][0]
-    rescue Exception => e
-      self.fail webclient, data.user, data.channel
-      return
+    if _match[:expression]
+      matches = _match[:expression].scan(Regexp::DAYS_AND_DATES)
     end
 
-    case wfh_day
-    when "today"
-      webclient.chat_postEphemeral(
-        user: data.user,
-        channel: data.channel,
-        text: "You're working from home today",
-        attachments: self.attachments(Date.today))
-    when "tomorrow"
-      webclient.chat_postEphemeral(
-        user: data.user,
-        channel: data.channel,
-        text: "You're working from home tomorrow",
-        attachments: self.attachments(Date.today+1.day))
-    else
-      begin
-        if !(wfh_day =~ Regexp::DATES).nil?
-          day = Date::strptime(wfh_day, DateUtils::SHORT_FORMAT)
-        else
-          day = Date.parse(wfh_day)
-        end
-      rescue Exception => e
-        self.fail webclient, data.user, data.channel
-      else
-        if day <= Date.today
-          day = DateUtils.closest_day(day.cwday)
-        end
-
-        webclient.chat_postEphemeral(
-          user: data.user,
-          channel: data.channel,
-          text: "You're working from home on #{day.strftime(DateUtils::LONG_FORMAT)}",
-          attachments: self.attachments(day))
-        end
+    dates = []
+    if matches.any?
+      matches.each do |match|
+        dates << DateUtils.extract_date_from_match(match)
+      end
     end
-  end
 
-  private
-  def self.fail webclient, user, channel
-    webclient.chat_postEphemeral(
-      user: user,
-      channel: channel,
-      text: ":thinking_face: Please use today, tomorrow, or any day of the week..."
+    WfhMessage.render(
+      webclient: webclient,
+      user: data.user,
+      channel: data.channel,
+      dates: dates
     )
-  end
-
-  def self.attachments date
-    return [
-      {
-        "callback_id": "wfh_confirmation",
-        "fallback": "Confirm",
-        "attachment_type": "default",
-        "actions":[
-          {
-            "name": "wfh_confirm",
-            "text": "Confirm",
-            "type": "button",
-            "value": date.to_s,
-            "style": "primary"
-          },
-			    {
-					  "name": "wfh_discard",
-					  "text": "Discard",
-					  "type": "button",
-					  "style": "danger"
-				  }
-			  ]
-	    }
-	  ]
   end
 end

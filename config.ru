@@ -6,6 +6,7 @@ require_relative 'service'
 require_relative 'models'
 require_relative 'commands'
 require_relative 'api'
+require_relative 'messages'
 require 'yaml'
 require 'erb'
 
