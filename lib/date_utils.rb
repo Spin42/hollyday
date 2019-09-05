@@ -14,15 +14,19 @@ class DateUtils
     if match.first.nil? && !(match.last =~ Regexp::DATES).nil?
       Date::strptime(match.last, DateUtils::SHORT_FORMAT)
     elsif !match.first.nil?
-      case match.first
-      when "today"
-        Date.today
-      when "tomorrow"
-        Date.today+1.day
-      else
-        estimated_date = Date.parse(match.first)
-        DateUtils.closest_day(estimated_date.cwday)
-      end
+      self.interpolate_date_from_string match.first
+    end
+  end
+
+  def self.interpolate_date_from_string date_string
+    case date_string
+    when "today"
+      Date.today
+    when "tomorrow"
+      Date.today+1.day
+    else
+      estimated_date = Date.parse(date_string)
+      DateUtils.closest_day(estimated_date.cwday)
     end
   end
 end

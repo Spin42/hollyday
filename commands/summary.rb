@@ -8,20 +8,24 @@ class Summary < SlackRubyBot::Commands::Base
     matches    = []
 
     if _match[:expression]
-      matches = _match[:expression].scan(Regexp::ENTRY_TYPE_AND_MONTHS)
+      matches = _match[:expression].scan(Regexp::ENTRY_TYPE_DAYS_AND_MONTHS)
     end
     query_parameters = {}
 
     if matches.any?
       matches.each do |match|
-        if ["pto", "wfh"].include?(match[0])
+        if Entry::AVAILABLE_TYPES.include?(match[0])
           query_parameters[:entry_type] = match[0]
         end
         if !match[1].nil?
           query_parameters[:user_id] = match[1]
         end
         if !match[2].nil?
-          date_range = Date.parse(match[2])..(Date.parse(match[2])+1.month)
+          date_range = Date.parse(match[2])..(Date.parse(match[2]).end_of_month)
+        end
+        if !match[3].nil?
+          date = DateUtils.interpolate_date_from_string(match[3])
+          date_range = date..date
         end
       end
 
@@ -41,7 +45,7 @@ class Summary < SlackRubyBot::Commands::Base
       webclient.chat_postMessage(
         user: data.user,
         channel: data.channel,
-        text: "Looks like there is nothing planned for the next few days...")
+        text: "Looks like there is nothing planned...")
     end
   end
 
