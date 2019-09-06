@@ -4,3 +4,5 @@ require_relative 'commands/pto'
 require_relative 'commands/sick'
 require_relative 'commands/entries'
 require_relative 'commands/summary'
+
+COMMANDS_REGEXP = /help|wfh|pto|sick|entries|summary/

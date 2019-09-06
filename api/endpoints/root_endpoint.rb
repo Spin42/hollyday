@@ -10,6 +10,7 @@ module Api
       mount Api::Endpoints::ActionsEndpoint
       mount Api::Endpoints::StatusEndpoint
       mount Api::Endpoints::TeamsEndpoint
+      mount Api::Endpoints::EventsEndpoint
     end
   end
 end
