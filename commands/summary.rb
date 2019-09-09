@@ -57,7 +57,7 @@ class Summary < SlackRubyBot::Commands::Base
       relevant_entries = entries.select{|entry| entry.start_date <= date && entry.end_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type]}
 
-      if users.any?
+      if users.any? && !date.on_weekend?
         attachments << {
           "fallback": "List of team members having an entry on #{date.strftime(DateUtils::LONG_FORMAT)}",
           "color": "#cccccc",
