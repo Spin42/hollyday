@@ -30,7 +30,7 @@ GEM
       console (~> 1.0)
       nio4r (~> 2.3)
       timers (~> 4.1)
-    async-io (1.24.0)
+    async-io (1.25.0)
       async (~> 1.14)
     async-websocket (0.8.0)
       async-io
@@ -50,7 +50,7 @@ GEM
     declarative-option (0.1.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    dotenv (2.7.4)
+    dotenv (2.7.5)
     equalizer (0.0.11)
     erubis (2.7.0)
     faraday (0.15.4)
@@ -59,7 +59,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     foreman (0.85.0)
       thor (~> 0.19.1)
-    gli (2.18.1)
+    gli (2.19.0)
     grape (1.2.4)
       activesupport
       builder
@@ -99,9 +99,9 @@ GEM
     newrelic-slack-ruby-bot (0.2.1)
       newrelic_rpm
       slack-ruby-bot (>= 0.10.5)
-    newrelic_rpm (6.5.0.357)
-    nio4r (2.4.0)
-    nokogiri (1.10.3)
+    newrelic_rpm (6.6.0.358)
+    nio4r (2.5.1)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     otr-activerecord (1.2.7)
       activerecord (>= 4.0, < 5.3)
@@ -119,7 +119,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.4)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.0.7.2)
       actionpack (= 5.0.7.2)
@@ -128,7 +128,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.19.0)
-    rake (12.3.2)
+    rake (12.3.3)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -149,7 +149,7 @@ GEM
       rack-rewrite
       rack-server-pages
       slack-ruby-bot (>= 0.12.0)
-    slack-ruby-client (0.14.2)
+    slack-ruby-client (0.14.4)
       activesupport
       faraday (>= 0.9)
       faraday_middleware
@@ -187,6 +187,7 @@ DEPENDENCIES
   dotenv
   json
   newrelic-slack-ruby-bot
+  nokogiri (>= 1.10.4)
   otr-activerecord (~> 1.2.1)
   pg
   rack-server-pages
@@ -197,4 +198,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.16.6
+   2.0.2

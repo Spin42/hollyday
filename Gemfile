@@ -13,3 +13,4 @@ gem "json"
 gem "rake"
 gem 'standalone_migrations', '~> 5.2'
 gem "awesome_print"
+gem "nokogiri", ">= 1.10.4"
