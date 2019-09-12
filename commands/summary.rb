@@ -2,15 +2,16 @@ class Summary < SlackRubyBot::Commands::Base
   command "summary"
 
   def self.call(client, data, _match)
-    team       = Team.where(team_id: data.team).first
-    webclient  = Slack::Web::Client.new(token: team.token)
-    date_range = Date.today..(Date.today+10.days)
-    matches    = []
+    team             = Team.where(team_id: data.team).first
+    webclient        = Slack::Web::Client.new(token: team.token)
+    date_range_start = Date.today
+    date_range_end   = Date.today+10.days
+    matches          = []
+    query_parameters = {}
 
     if _match[:expression]
       matches = _match[:expression].scan(Regexp::ENTRY_TYPE_DAYS_AND_MONTHS)
     end
-    query_parameters = {}
 
     if matches.any?
       matches.each do |match|
@@ -21,26 +22,27 @@ class Summary < SlackRubyBot::Commands::Base
           query_parameters[:user_id] = match[1]
         end
         if !match[2].nil?
-          date_range = Date.parse(match[2])..(Date.parse(match[2]).end_of_month)
+          date_range_start = Date.parse(match[2])
+          date_range_end   = Date.parse(match[2]).end_of_month
         end
         if !match[3].nil?
-          date = DateUtils.interpolate_date_from_string(match[3])
-          date_range = date..date
+          date_range_start = DateUtils.interpolate_date_from_string(match[3])
+          date_range_end   = date_range_start
         end
       end
-
-      query_parameters[:start_date] = date_range
     end
 
     query_parameters.merge({team_id: data.team})
-    entries = Entry.where(query_parameters).order(:start_date)
+    entries = Entry.where(query_parameters).
+      where("start_date <= ? AND end_date >= ?", date_range_end, date_range_start).
+      order(:start_date)
 
     if entries.any?
       webclient.chat_postMessage(
         user: data.user,
         channel: data.channel,
         text: "Here's what's happening:",
-        attachments: self.summary_attachments(entries, date_range))
+        attachments: self.summary_attachments(entries, date_range_start..date_range_end))
     else
       webclient.chat_postMessage(
         user: data.user,
