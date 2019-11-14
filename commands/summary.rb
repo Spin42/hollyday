@@ -22,8 +22,13 @@ class Summary < SlackRubyBot::Commands::Base
           query_parameters[:user_id] = match[1]
         end
         if !match[2].nil?
-          date_range_start = Date.parse(match[2])
-          date_range_end   = Date.parse(match[2]).end_of_month
+          parsed_date = Date.parse(match[2])
+          if parsed_date < Date.today
+            parsed_date += 1.year
+          end
+
+          date_range_start = parsed_date
+          date_range_end   = parsed_date.end_of_month
         end
         if !match[3].nil?
           date_range_start = DateUtils.interpolate_date_from_string(match[3])
