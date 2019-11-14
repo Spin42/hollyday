@@ -77,14 +77,22 @@ module Api
             text: ":spiral_calendar_pad: Well, it seems I have already written it down!"
           }
         else
-          Entry.create(team_id: team_id,
+          entry = Entry.create(team_id: team_id,
             user_id: user_id,
             entry_type: entry_type,
             start_date: start_date,
             end_date: end_date)
-          {
-            text: ":white_check_mark: Gotcha! I've written it down."
-          }
+
+
+          if entry.errors.any?
+            {
+              text: ":no_entry_sign: #{entry.errors.full_messages.join(", ")}"
+            }
+          else
+            {
+              text: ":white_check_mark: Gotcha! I've written it down."
+            }
+          end
         end
       end
 
