@@ -101,7 +101,7 @@ GEM
       slack-ruby-bot (>= 0.10.5)
     newrelic_rpm (6.6.0.358)
     nio4r (2.5.1)
-    nokogiri (1.10.4)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     otr-activerecord (1.2.7)
       activerecord (>= 4.0, < 5.3)
