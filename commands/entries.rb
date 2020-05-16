@@ -1,5 +1,5 @@
 class Entries < SlackRubyBot::Commands::Base
-  command "entries"
+  command "entries", "Entries", "ENTRIES"
 
   def self.call(client, data, _match)
     team = Team.where(team_id: data.team).first

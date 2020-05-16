@@ -1,6 +1,5 @@
 class Sick < SlackRubyBot::Commands::Base
-  command "sick"
-  command "SICK"
+  command "sick", "SICK", "Sick"
 
   def self.call(client, data, _match)
     team      = Team.where(team_id: data.team).first

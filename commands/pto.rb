@@ -1,6 +1,5 @@
 class Pto < SlackRubyBot::Commands::Base
-  command "pto"
-  command "PTO"
+  command "pto", "PTO", "Pto"
 
   def self.call(client, data, _match)
     team      = Team.where(team_id: data.team).first

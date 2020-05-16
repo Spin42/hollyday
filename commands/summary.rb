@@ -1,5 +1,5 @@
 class Summary < SlackRubyBot::Commands::Base
-  command "summary"
+  command "summary", "Summary", "SUMMARY"
 
   def self.call(client, data, _match)
     team             = Team.where(team_id: data.team).first
