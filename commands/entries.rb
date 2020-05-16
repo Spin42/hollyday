@@ -34,7 +34,7 @@ class Entries < SlackRubyBot::Commands::Base
         "color": "#cccccc",
         "title": "#{MessageUtils::EMOJIS[:"#{entry.entry_type}"]} #{entry.entry_type}",
         "callback_id": "entries_management",
-        "text": self.text(entry.start_date, entry.end_date),
+        "text": self.text(entry.start_date, entry.end_date, entry.am, entry.pm),
         "actions": [
             {
               "name": "entry_delete",
@@ -49,11 +49,18 @@ class Entries < SlackRubyBot::Commands::Base
     end
   end
 
-  def self.text start_date, end_date
-    if start_date == end_date
-      "On #{start_date.strftime(DateUtils::LONG_FORMAT)}"
+  def self.text start_date, end_date, am, pm
+    if !(am && pm)
+      am_pm_suffix = "in the morning" if am && !pm
+      am_pm_suffix = "in the afternoon" if !am && pm
     else
-      "From #{start_date.strftime(DateUtils::LONG_FORMAT)} to #{end_date.strftime(DateUtils::LONG_FORMAT)}"
+      am_pm_suffix = ""
+    end
+
+    if start_date == end_date
+      "On #{start_date.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
+    else
+      "From #{start_date.strftime(DateUtils::LONG_FORMAT)} to #{end_date.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
     end
   end
 end

@@ -4,4 +4,12 @@ class MessageUtils
   def self.emoji_for entry_type
     EMOJIS[:"#{entry_type}"]
   end
+
+  def self.am_pm_helper entry
+    if entry.am && !entry.pm
+      "AM"
+    elsif !entry.am && entry.pm
+      "PM"
+    end
+  end
 end

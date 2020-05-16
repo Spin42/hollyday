@@ -62,14 +62,14 @@ class Summary < SlackRubyBot::Commands::Base
     attachments = []
     (range).each do |date|
       relevant_entries = entries.select{|entry| entry.start_date <= date && entry.end_date >= date}
-      users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type]}
+      users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type, entry]}
 
       if users.any? && !date.on_weekend?
         attachments << {
           "fallback": "List of team members having an entry on #{date.strftime(DateUtils::LONG_FORMAT)}",
           "color": "#cccccc",
           "title": date.strftime(DateUtils::LONG_FORMAT),
-          "text": users.map{|user| "#{MessageUtils.emoji_for(user[1])} #{user[0]}"}.join(" ")
+          "text": users.map{|user| "#{MessageUtils.emoji_for(user[1])} #{MessageUtils.am_pm_helper(user[2])} #{user[0]}"}.join(" ")
         }
       end
     end
