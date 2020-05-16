@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'activerecord', '~> 5.0.0', require: 'active_record'
+gem 'activerecord', '~> 5.2', require: 'active_record'
+gem 'actionview', '~> 5.2.4.2'
 gem 'newrelic-slack-ruby-bot'
 gem 'otr-activerecord', '~> 1.2.1'
 gem 'pg'
