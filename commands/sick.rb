@@ -7,6 +7,7 @@ class Sick < SlackRubyBot::Commands::Base
 
     if _match[:expression]
       matches = _match[:expression].scan(Regexp::DAYS_AND_DATES)
+      am_pm_matches = _match[:expression].scan(Regexp::AM_PM)
     end
 
     dates = []
@@ -16,11 +17,28 @@ class Sick < SlackRubyBot::Commands::Base
       end
     end
 
+    am = true
+    pm = true
+
+    if am_pm_matches.any?
+      am_pm_matches.each do |match|
+        if ["morning","am"].include? match.first
+          am = true
+          pm = false
+        elsif ["afternoon","pm"].include? match.first
+          am = false
+          pm = true
+        end
+      end
+    end
+
     SickMessage.render(
       webclient: webclient,
       user: data.user,
       channel: data.channel,
-      dates: dates
+      dates: dates,
+      am: am,
+      pm: pm
     )
   end
 end

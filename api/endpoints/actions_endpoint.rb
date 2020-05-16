@@ -14,17 +14,17 @@ module Api
           channel_id = payload["channel"]["id"]
 
           if payload["actions"][0]["name"] == "wfh_confirm"
-            dates = JSON.parse(payload["actions"][0]["value"])
+            value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", dates[0], dates[1])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", value[0], value[1], value[2], value[3])
           elsif payload["actions"][0]["name"] == "pto_confirm"
-            dates = JSON.parse(payload["actions"][0]["value"])
+            value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", dates[0], dates[1])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", value[0], value[1], value[2], value[3])
           elsif payload["actions"][0]["name"] == "sick_confirm"
-            dates = JSON.parse(payload["actions"][0]["value"])
+            value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", dates[0], dates[1])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", value[0], value[1], value[2], value[3])
           elsif payload["actions"][0]["name"] == "entry_delete"
             entry_hash = JSON.parse(payload["actions"][0]["value"])
             entry = Entry.where(id: entry_hash["id"], user_id: entry_hash["user_id"]).first()
@@ -65,12 +65,14 @@ module Api
       end
 
       private
-      def self.process_entry team_id, user_id, entry_type, start_date, end_date
+      def self.process_entry team_id, user_id, entry_type, start_date, end_date, am=true, pm=true
         existing_entries = Entry.where(team_id: team_id,
           user_id: user_id,
           entry_type: entry_type,
           start_date: start_date,
-          end_date: end_date)
+          end_date: end_date,
+          am: am,
+          pm: pm)
 
         if existing_entries.any?
           {
@@ -81,7 +83,9 @@ module Api
             user_id: user_id,
             entry_type: entry_type,
             start_date: start_date,
-            end_date: end_date)
+            end_date: end_date,
+            am: am,
+            pm: pm)
 
 
           if entry.errors.any?

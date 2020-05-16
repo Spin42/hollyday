@@ -3,17 +3,32 @@ class PtoMessage
     if params[:dates] && params[:dates].size == 1
       dates = params[:dates]
       dates << params[:dates].first
+
+      if !(params[:am] && params[:pm])
+        am_pm_suffix = "in the morning" if params[:am] && !params[:pm]
+        am_pm_suffix = "in the afternoon" if !params[:am] && params[:pm]
+      else
+        am_pm_suffix = ""
+      end
+
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
-        text: "You're some personal time off on #{dates.first.strftime(DateUtils::LONG_FORMAT)}",
-        attachments: self.attachments(dates))
+        text: "You're some personal time off on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
+        attachments: self.attachments(dates, params[:am], params[:pm]))
     elsif params[:dates].size == 2
+      if !(params[:am] && params[:pm])
+        am_pm_suffix = "in the morning" if params[:am] && !params[:pm]
+        am_pm_suffix = "in the afternoon" if !params[:am] && params[:pm]
+      else
+        am_pm_suffix = ""
+      end
+
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
-        text: "You're taking some personal time off from #{params[:dates].first.strftime(DateUtils::LONG_FORMAT)} to #{params[:dates].last.strftime(DateUtils::LONG_FORMAT)}",
-        attachments: self.attachments(params[:dates]))
+        text: "You're taking some personal time off from #{params[:dates].first.strftime(DateUtils::LONG_FORMAT)} to #{params[:dates].last.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
+        attachments: self.attachments(params[:dates], params[:am], params[:pm]))
     else
       params[:webclient].chat_postEphemeral(
         user: params[:user],
@@ -23,7 +38,7 @@ class PtoMessage
     end
   end
 
-  def self.attachments dates
+  def self.attachments dates, am, pm
     return [
       {
         "callback_id": "pto_confirmation",
@@ -34,7 +49,7 @@ class PtoMessage
             "name": "pto_confirm",
             "text": "Confirm",
             "type": "button",
-            "value": dates.to_json,
+            "value": [dates, am, pm].flatten.to_json,
             "style": "primary"
           },
           {

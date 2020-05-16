@@ -6,13 +6,29 @@ class Wfh < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     if _match[:expression]
-      matches = _match[:expression].scan(Regexp::DAYS_AND_DATES)
+      date_matches = _match[:expression].scan(Regexp::DAYS_AND_DATES)
+      am_pm_matches = _match[:expression].scan(Regexp::AM_PM)
     end
 
     dates = []
-    if matches.any?
-      matches.each do |match|
+    if date_matches.any?
+      date_matches.each do |match|
         dates << DateUtils.extract_date_from_match(match)
+      end
+    end
+
+    am = true
+    pm = true
+
+    if am_pm_matches.any?
+      am_pm_matches.each do |match|
+        if ["morning","am"].include? match.first
+          am = true
+          pm = false
+        elsif ["afternoon","pm"].include? match.first
+          am = false
+          pm = true
+        end
       end
     end
 
@@ -20,7 +36,9 @@ class Wfh < SlackRubyBot::Commands::Base
       webclient: webclient,
       user: data.user,
       channel: data.channel,
-      dates: dates
+      dates: dates,
+      am: am,
+      pm: pm
     )
   end
 end

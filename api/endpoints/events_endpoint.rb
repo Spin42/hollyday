@@ -7,7 +7,6 @@ module Api
 
       namespace :events do
         post "/" do
-          puts params.inspect
           case params[:type]
           when "url_verification" then
             params[:challenge]
