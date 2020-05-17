@@ -4,8 +4,8 @@ class Summary < SlackRubyBot::Commands::Base
   def self.call(client, data, _match)
     team             = Team.where(team_id: data.team).first
     webclient        = Slack::Web::Client.new(token: team.token)
-    date_range_start = DateTime.now.beginning_of_day
-    date_range_end   = DateTime.now.beginning_of_day+10.days
+    date_range_start = Date.today
+    date_range_end   = Date.today+10.days
     matches          = []
     query_parameters = {}
 
@@ -61,7 +61,7 @@ class Summary < SlackRubyBot::Commands::Base
   def self.summary_attachments entries, range
     attachments = []
     (range).each do |date|
-      relevant_entries = entries.select{|entry| entry.start_date <= date+24.hours && entry.end_date >= date}
+      relevant_entries = entries.select{|entry| entry.start_date <= date.end_of_day && entry.end_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type, entry]}
 
       if users.any? && !date.on_weekend?
