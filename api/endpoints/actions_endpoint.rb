@@ -25,6 +25,11 @@ module Api
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
             Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", value[0], value[1], value[2], value[3])
+          elsif payload["actions"][0]["name"] == "afk_confirm"
+            puts "yoyoyoyoyo"
+            value = JSON.parse(payload["actions"][0]["value"])
+            status 200
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "afk", value[0], value[1], false, false)
           elsif payload["actions"][0]["name"] == "entry_delete"
             entry_hash = JSON.parse(payload["actions"][0]["value"])
             entry = Entry.where(id: entry_hash["id"], user_id: entry_hash["user_id"]).first()

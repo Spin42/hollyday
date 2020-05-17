@@ -193,6 +193,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 5.2.4.2)
   activerecord (~> 5.2)
+  activesupport
   awesome_print
   dotenv
   json

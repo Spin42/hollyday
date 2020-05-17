@@ -1,7 +1,7 @@
 class Entry < ActiveRecord::Base
   validate :end_date_after_start_date
 
-  AVAILABLE_TYPES = ["wfh", "pto", "sick"]
+  AVAILABLE_TYPES = ["wfh", "pto", "sick", "afk"]
 
   belongs_to :team
   belongs_to :user

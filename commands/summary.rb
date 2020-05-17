@@ -4,8 +4,8 @@ class Summary < SlackRubyBot::Commands::Base
   def self.call(client, data, _match)
     team             = Team.where(team_id: data.team).first
     webclient        = Slack::Web::Client.new(token: team.token)
-    date_range_start = Date.today
-    date_range_end   = Date.today+10.days
+    date_range_start = DateTime.now.beginning_of_day
+    date_range_end   = DateTime.now.beginning_of_day+10.days
     matches          = []
     query_parameters = {}
 
@@ -61,7 +61,7 @@ class Summary < SlackRubyBot::Commands::Base
   def self.summary_attachments entries, range
     attachments = []
     (range).each do |date|
-      relevant_entries = entries.select{|entry| entry.start_date <= date && entry.end_date >= date}
+      relevant_entries = entries.select{|entry| entry.start_date <= date+24.hours && entry.end_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type, entry]}
 
       if users.any? && !date.on_weekend?
@@ -69,10 +69,18 @@ class Summary < SlackRubyBot::Commands::Base
           "fallback": "List of team members having an entry on #{date.strftime(DateUtils::LONG_FORMAT)}",
           "color": "#cccccc",
           "title": date.strftime(DateUtils::LONG_FORMAT),
-          "text": users.map{|user| "#{MessageUtils.emoji_for(user[1])} #{MessageUtils.am_pm_helper(user[2])} #{user[0]}"}.join(" ")
+          "text": users.map{|user| self.display_text_for_user(user)}.join(" ")
         }
       end
     end
     return attachments
+  end
+
+  def self.display_text_for_user user
+    if user[1] == "afk"
+      "#{MessageUtils.emoji_for(user[1])} #{user[2].start_date.strftime(DateUtils::TIME)} - #{user[2].end_date.strftime(DateUtils::TIME)} #{user[0]}"
+    else
+      "#{MessageUtils.emoji_for(user[1])} #{MessageUtils.am_pm_helper(user[2])} #{user[0]}"
+    end
   end
 end
