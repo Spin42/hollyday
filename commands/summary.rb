@@ -24,7 +24,7 @@ class Summary < SlackRubyBot::Commands::Base
         if !match[2].nil?
           parsed_date = Date.parse(match[2])
           if parsed_date < Date.today
-            parsed_date += 1.year
+            parsed_date += 1.year unless Date.today.month == parsed_date.month
           end
 
           date_range_start = parsed_date
