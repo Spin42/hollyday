@@ -4,8 +4,8 @@ class Summary < SlackRubyBot::Commands::Base
   def self.call(client, data, _match)
     team             = Team.where(team_id: data.team).first
     webclient        = Slack::Web::Client.new(token: team.token)
-    date_range_start = Date.today
-    date_range_end   = Date.today+10.days
+    date_range_start = DateTime.now.beginning_of_day
+    date_range_end   = DateTime.now.end_of_day+10.days
     matches          = []
     query_parameters = {}
 
@@ -22,17 +22,17 @@ class Summary < SlackRubyBot::Commands::Base
           query_parameters[:user_id] = match[1]
         end
         if !match[2].nil?
-          parsed_date = Date.parse(match[2])
-          if parsed_date < Date.today
-            parsed_date += 1.year unless Date.today.month == parsed_date.month
+          parsed_date = DateTime.parse(match[2])
+          if parsed_date < DateTime.now
+            parsed_date += 1.year
           end
 
-          date_range_start = parsed_date
+          date_range_start = parsed_date.beginning_of_day
           date_range_end   = parsed_date.end_of_month
         end
         if !match[3].nil?
-          date_range_start = DateUtils.interpolate_date_from_string(match[3])
-          date_range_end   = date_range_start
+          date_range_start = DateUtils.interpolate_date_from_string(match[3]).beginning_of_day
+          date_range_end   = date_range_start.end_of_day
         end
       end
     end
@@ -47,7 +47,7 @@ class Summary < SlackRubyBot::Commands::Base
         user: data.user,
         channel: data.channel,
         text: "Here's what's happening:",
-        attachments: self.summary_attachments(entries, date_range_start..date_range_end))
+        attachments: self.summary_attachments(entries, date_range_start.to_date..date_range_end.to_date))
     else
       webclient.chat_postMessage(
         user: data.user,
@@ -60,8 +60,9 @@ class Summary < SlackRubyBot::Commands::Base
 
   def self.summary_attachments entries, range
     attachments = []
+    puts range.inspect
     (range).each do |date|
-      relevant_entries = entries.select{|entry| entry.start_date <= date.end_of_day && entry.end_date >= date}
+      relevant_entries = entries.select{|entry| entry.start_date.to_date <= date && entry.end_date.to_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type, entry]}
 
       if users.any? && !date.on_weekend?

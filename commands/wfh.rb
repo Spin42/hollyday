@@ -6,8 +6,8 @@ class Wfh < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     if _match[:expression]
-      date_matches = _match[:expression].scan(Regexp::DAYS_AND_DATES)
-      am_pm_matches = _match[:expression].scan(Regexp::AM_PM)
+      date_matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_DATES)
+      am_pm_matches = _match[:expression].downcase.scan(Regexp::AM_PM)
     end
 
     dates = []

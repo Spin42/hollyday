@@ -6,7 +6,7 @@ class Afk < SlackRubyBot::Commands::Base
     webclient = Slack::Web::Client.new(token: team.token)
 
     if _match[:expression]
-      matches = _match[:expression].scan(Regexp::DAYS_AND_TIMES)
+      matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_TIMES)
     end
 
     if matches.any?

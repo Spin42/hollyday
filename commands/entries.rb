@@ -8,7 +8,7 @@ class Entries < SlackRubyBot::Commands::Base
     entries = Entry.where(
       team_id: data.team,
       user_id: data.user).where(
-      "(start_date >= ? OR end_date >= ?)", Date.today, Date.today)
+      "(start_date >= ? OR end_date >= ?)", DateTime.now.beginning_of_day.utc, DateTime.now.beginning_of_day.utc)
       .order(:start_date)
 
     if entries.any?
