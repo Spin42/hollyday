@@ -4,7 +4,7 @@ class AfkMessage
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
-        text: "You're afk on #{params[:times].first.strftime(DateUtils::LONG_FORMAT)} from #{params[:times].first.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)} to #{params[:times].last.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)}",
+        text: "You're afk on #{params[:times].first.strftime(DateUtils::LONG_FORMAT)} from #{params[:times].first.strftime(DateUtils::TIME)} to #{params[:times].last.strftime(DateUtils::TIME)}",
         attachments: self.attachments(params[:times]))
     else
       params[:webclient].chat_postEphemeral(
