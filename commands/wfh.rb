@@ -5,6 +5,9 @@ class Wfh < SlackRubyBot::Commands::Base
     team = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
 
+    date_matches = []
+    am_pm_matches = []
+    recurrent_match = []
     if _match[:expression]
       date_matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_DATES)
       am_pm_matches = _match[:expression].downcase.scan(Regexp::AM_PM)

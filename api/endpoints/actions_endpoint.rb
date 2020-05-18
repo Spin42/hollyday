@@ -91,8 +91,8 @@ module Api
             entry = Entry.create(team_id: team_id,
               user_id: user_id,
               entry_type: entry_type,
-              start_date: DateTime.parse(start_date)+(index - 1).weeks,
-              end_date: DateTime.parse(end_date)+(index - 1).weeks,
+              start_date: DateTime.parse(start_date)+(index).weeks,
+              end_date: DateTime.parse(end_date)+(index).weeks,
               am: am,
               pm: pm)
             errors << entry.errors if entry.errors.any?

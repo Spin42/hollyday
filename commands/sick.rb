@@ -5,6 +5,8 @@ class Sick < SlackRubyBot::Commands::Base
     team      = Team.where(team_id: data.team).first
     webclient = Slack::Web::Client.new(token: team.token)
 
+    matches = []
+    am_pm_matches = []
     if _match[:expression]
       matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_DATES)
       am_pm_matches = _match[:expression].downcase.scan(Regexp::AM_PM)

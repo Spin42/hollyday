@@ -40,7 +40,7 @@ class WfhMessage
 
   def self.text_for_entry dates, am_pm_suffix, recurring
     if recurring
-      "You're working from home every #{dates.first.strftime("%A")}s #{am_pm_suffix} (will repeat for 30 weeks)"
+      "You're working from home every #{dates.first.strftime("%A")}s #{am_pm_suffix} (will repeat for 12 weeks)"
     else
       "You're working from home on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
     end
