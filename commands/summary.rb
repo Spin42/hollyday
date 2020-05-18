@@ -23,11 +23,11 @@ class Summary < SlackRubyBot::Commands::Base
         end
         if !match[2].nil?
           parsed_date = DateTime.parse(match[2])
-          if parsed_date < DateTime.now
+          if parsed_date < DateTime.now.beginning_of_month
             parsed_date += 1.year
           end
 
-          date_range_start = parsed_date.beginning_of_day
+          date_range_start = parsed_date.beginning_of_month
           date_range_end   = parsed_date.end_of_month
         end
         if !match[3].nil?

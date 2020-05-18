@@ -16,20 +16,20 @@ module Api
           if payload["actions"][0]["name"] == "wfh_confirm"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", value[0], value[1], value[2], value[3])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "wfh", value[0], value[1], value[2], value[3], value[4])
           elsif payload["actions"][0]["name"] == "pto_confirm"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", value[0], value[1], value[2], value[3])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", value[0], value[1], value[2], value[3], false)
           elsif payload["actions"][0]["name"] == "sick_confirm"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", value[0], value[1], value[2], value[3])
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", value[0], value[1], value[2], value[3], false)
           elsif payload["actions"][0]["name"] == "afk_confirm"
             puts "yoyoyoyoyo"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "afk", value[0], value[1], false, false)
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "afk", value[0], value[1], false, false, false)
           elsif payload["actions"][0]["name"] == "entry_delete"
             entry_hash = JSON.parse(payload["actions"][0]["value"])
             entry = Entry.where(id: entry_hash["id"], user_id: entry_hash["user_id"]).first()
@@ -70,12 +70,12 @@ module Api
       end
 
       private
-      def self.process_entry team_id, user_id, entry_type, start_date, end_date, am=true, pm=true
+      def self.process_entry team_id, user_id, entry_type, start_date, end_date, am=true, pm=true, recurring=false
         existing_entries = Entry.where(team_id: team_id,
           user_id: user_id,
           entry_type: entry_type,
-          start_date: start_date,
-          end_date: end_date,
+          start_date: DateTime.parse(start_date),
+          end_date: DateTime.parse(end_date),
           am: am,
           pm: pm)
 
@@ -84,16 +84,21 @@ module Api
             text: ":spiral_calendar_pad: Well, it seems I have already written it down!"
           }
         else
-          entry = Entry.create(team_id: team_id,
-            user_id: user_id,
-            entry_type: entry_type,
-            start_date: start_date,
-            end_date: end_date,
-            am: am,
-            pm: pm)
+          occurences = recurring ? 12 : 1
+          errors = []
+          puts occurences.inspect
+          occurences.times do |index|
+            entry = Entry.create(team_id: team_id,
+              user_id: user_id,
+              entry_type: entry_type,
+              start_date: DateTime.parse(start_date)+(index - 1).weeks,
+              end_date: DateTime.parse(end_date)+(index - 1).weeks,
+              am: am,
+              pm: pm)
+            errors << entry.errors if entry.errors.any?
+          end
 
-
-          if entry.errors.any?
+          if errors.any?
             {
               text: ":no_entry_sign: #{entry.errors.full_messages.join(", ")}"
             }

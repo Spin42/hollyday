@@ -14,8 +14,8 @@ class WfhMessage
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
-        text: "You're working from home on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
-        attachments: self.attachments(dates, params[:am], params[:pm]))
+        text: self.text_for_entry(dates, am_pm_suffix, params[:recurring]),
+        attachments: self.attachments(dates, params[:am], params[:pm], params[:recurring]))
     elsif params[:dates].size == 2
       if !(params[:am] && params[:pm])
         am_pm_suffix = "in the morning" if params[:am] && !params[:pm]
@@ -23,12 +23,12 @@ class WfhMessage
       else
         am_pm_suffix = ""
       end
-      
+
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
         text: "You're working from home from #{params[:dates].first.strftime(DateUtils::LONG_FORMAT)} to #{params[:dates].last.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
-        attachments: self.attachments(params[:dates], params[:am], params[:pm]))
+        attachments: self.attachments(params[:dates], params[:am], params[:pm], params[:recurring]))
     else
       params[:webclient].chat_postEphemeral(
         user: params[:user],
@@ -38,7 +38,15 @@ class WfhMessage
     end
   end
 
-  def self.attachments dates, am, pm
+  def self.text_for_entry dates, am_pm_suffix, recurring
+    if recurring
+      "You're working from home every #{dates.first.strftime("%A")}s #{am_pm_suffix} (will repeat for 30 weeks)"
+    else
+      "You're working from home on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
+    end
+  end
+
+  def self.attachments dates, am, pm, recurring
     return [
       {
         "callback_id": "wfh_confirmation",
@@ -49,7 +57,7 @@ class WfhMessage
             "name": "wfh_confirm",
             "text": "Confirm",
             "type": "button",
-            "value": [dates, am, pm].flatten.to_json,
+            "value": [dates, am, pm, recurring].flatten.to_json,
             "style": "primary"
           },
 			    {
