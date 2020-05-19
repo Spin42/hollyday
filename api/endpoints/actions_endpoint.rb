@@ -103,6 +103,7 @@ module Api
               text: ":no_entry_sign: #{entry.errors.full_messages.join(", ")}"
             }
           else
+            self.publish_feedback_message_for_entry team_id, user_id, entry_type, start_date, end_date
             {
               text: ":white_check_mark: Gotcha! I've written it down."
             }
@@ -115,6 +116,30 @@ module Api
           "On #{start_date.strftime("%A %B %d")}"
         else
           "From #{start_date.strftime("%A %B %d")} to #{end_date.strftime("%A %B %d")}"
+        end
+      end
+
+      def self.publish_feedback_message_for_entry team_id, user_id, entry_type, start_date, end_date
+        if entry_type = "afk"
+          team      = Team.where(team_id: team_id).first
+          webclient = Slack::Web::Client.new(token: team.token)
+          channels = webclient.channels_list.channels
+          afk_channel = channels.detect { |c| c.name == "afk" }
+          if afk_channel
+            if start_date < DateTime.current.end_of_day && end_date < DateTime.current.end_of_day
+              webclient.chat_postMessage(
+                as_user: true,
+                channel: "#afk",
+                text: "<@#{user_id}> is afk from #{DateTime.parse(start_date).strftime(DateUtils::TIME)} to #{DateTime.parse(end_date).strftime(DateUtils::TIME)}"
+              )
+            else
+              webclient.chat_postMessage(
+                as_user: true,
+                channel: "#afk",
+                text: "<@#{user_id}> will be afk on #{DateTime.parse(start_date).strftime(DateUtils::LONG_FORMAT)} from #{DateTime.parse(start_date).strftime(DateUtils::TIME)} to #{DateTime.parse(end_date).strftime(DateUtils::TIME)}"
+              )
+            end
+          end
         end
       end
     end
