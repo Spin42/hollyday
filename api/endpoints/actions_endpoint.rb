@@ -20,7 +20,7 @@ module Api
           elsif payload["actions"][0]["name"] == "pto_confirm"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
-            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", value[0], value[1], value[2], value[3], false)
+            Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "pto", value[0], value[1], value[2], value[3], value[4])
           elsif payload["actions"][0]["name"] == "sick_confirm"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
@@ -120,7 +120,7 @@ module Api
       end
 
       def self.publish_feedback_message_for_entry team_id, user_id, entry_type, start_date, end_date
-        if entry_type = "afk"
+        if entry_type == "afk"
           team      = Team.where(team_id: team_id).first
           webclient = Slack::Web::Client.new(token: team.token)
           channels = webclient.channels_list.channels

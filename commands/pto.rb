@@ -7,9 +7,11 @@ class Pto < SlackRubyBot::Commands::Base
 
     matches = []
     am_pm_matches = []
+    recurrent_match = []
     if _match[:expression]
       matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_DATES)
       am_pm_matches = _match[:expression].downcase.scan(Regexp::AM_PM)
+      recurrent_match = _match[:expression].downcase.scan(Regexp::RECURRENT)
     end
 
     dates = []
@@ -40,7 +42,8 @@ class Pto < SlackRubyBot::Commands::Base
       channel: data.channel,
       dates: dates,
       am: am,
-      pm: pm
+      pm: pm,
+      recurring: recurrent_match.any?
     )
   end
 end

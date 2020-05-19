@@ -14,8 +14,8 @@ class PtoMessage
       params[:webclient].chat_postEphemeral(
         user: params[:user],
         channel: params[:channel],
-        text: "You're some personal time off on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
-        attachments: self.attachments(dates, params[:am], params[:pm]))
+        text: self.text_for_entry(dates, am_pm_suffix, params[:recurring]),
+        attachments: self.attachments(dates, params[:am], params[:pm], params[:recurring]))
     elsif params[:dates].size == 2
       if !(params[:am] && params[:pm])
         am_pm_suffix = "in the morning" if params[:am] && !params[:pm]
@@ -28,7 +28,7 @@ class PtoMessage
         user: params[:user],
         channel: params[:channel],
         text: "You're taking some personal time off from #{params[:dates].first.strftime(DateUtils::LONG_FORMAT)} to #{params[:dates].last.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}",
-        attachments: self.attachments(params[:dates], params[:am], params[:pm]))
+        attachments: self.attachments(params[:dates], params[:am], params[:pm], params[:recurring]))
     else
       params[:webclient].chat_postEphemeral(
         user: params[:user],
@@ -38,7 +38,7 @@ class PtoMessage
     end
   end
 
-  def self.attachments dates, am, pm
+  def self.attachments dates, am, pm, recurring
     return [
       {
         "callback_id": "pto_confirmation",
@@ -49,7 +49,7 @@ class PtoMessage
             "name": "pto_confirm",
             "text": "Confirm",
             "type": "button",
-            "value": [dates, am, pm].flatten.to_json,
+            "value": [dates, am, pm, recurring].flatten.to_json,
             "style": "primary"
           },
           {
@@ -61,5 +61,13 @@ class PtoMessage
         ]
       }
     ]
+  end
+
+  def self.text_for_entry dates, am_pm_suffix, recurring
+    if recurring
+      "You're taking some personal time off every #{dates.first.strftime("%A")}s #{am_pm_suffix} (will repeat for 12 weeks)"
+    else
+      "You're taking some personal time off on #{dates.first.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
+    end
   end
 end
