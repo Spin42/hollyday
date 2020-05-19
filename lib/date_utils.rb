@@ -25,20 +25,23 @@ class DateUtils
   end
 
   def self.extract_date_and_times_from_matches matches
+    Time.zone = "Europe/Brussels"
     if matches.size == 3
       day = extract_date_from_match matches[0] || Date.today
       from = extract_hours_and_minutes_from_string matches[1][2]
       to = extract_hours_and_minutes_from_string matches[2][2]
-      [DateTime.new(day.year, day.month, day.day, from[0], from[1]), DateTime.new(day.year, day.month, day.day, to[0], to[1])]
+      [DateTime.civil_from_format(:local, day.year, day.month, day.day, from[0], from[1]),
+        DateTime.civil_from_format(:local, day.year, day.month, day.day, to[0], to[1])]
     elsif matches.size == 2
       day = Date.today
       from = extract_hours_and_minutes_from_string matches[0][2]
       to = extract_hours_and_minutes_from_string matches[1][2]
-      [DateTime.new(day.year, day.month, day.day, from[0], from[1]), DateTime.new(day.year, day.month, day.day, to[0], to[1])]
+      [DateTime.civil_from_format(:local, day.year, day.month, day.day, from[0], from[1]),
+        DateTime.civil_from_format(:local, day.year, day.month, day.day, to[0], to[1])]
     elsif matches.size == 1
-      now = DateTime.now
+      now = DateTime.current
       to = extract_hours_and_minutes_from_string matches[0][2]
-      [now, DateTime.new(now.year, now.month, now.day, to[0], to[1])]
+      [now, DateTime.civil_from_format(:local, now.year, now.month, now.day, to[0], to[1])]
     end
   end
 

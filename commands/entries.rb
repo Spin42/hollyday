@@ -60,7 +60,7 @@ class Entries < SlackRubyBot::Commands::Base
     if start_date == end_date
       "On #{start_date.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
     elsif type == "afk"
-      "On #{start_date.strftime(DateUtils::LONG_FORMAT)} from #{start_date.strftime(DateUtils::TIME)} to #{end_date.strftime(DateUtils::TIME)}"
+      "On #{start_date.strftime(DateUtils::LONG_FORMAT)} from #{start_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)} to #{end_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)}"
     else
       "From #{start_date.strftime(DateUtils::LONG_FORMAT)} to #{end_date.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
     end

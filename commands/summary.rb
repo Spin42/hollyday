@@ -80,7 +80,7 @@ class Summary < SlackRubyBot::Commands::Base
 
   def self.display_text_for_user user
     if user[1] == "afk"
-      "#{MessageUtils.emoji_for(user[1])} #{user[2].start_date.strftime(DateUtils::TIME)} - #{user[2].end_date.strftime(DateUtils::TIME)} #{user[0]}"
+      "#{MessageUtils.emoji_for(user[1])} #{user[2].start_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)} - #{user[2].end_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)} #{user[0]}"
     else
       "#{MessageUtils.emoji_for(user[1])} #{MessageUtils.am_pm_helper(user[2])} #{user[0]}"
     end
