@@ -26,7 +26,6 @@ module Api
             status 200
             Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "sick", value[0], value[1], value[2], value[3], false)
           elsif payload["actions"][0]["name"] == "afk_confirm"
-            puts "yoyoyoyoyo"
             value = JSON.parse(payload["actions"][0]["value"])
             status 200
             Api::Endpoints::ActionsEndpoint.process_entry(team_id, user_id, "afk", value[0], value[1], false, false, false)
@@ -86,7 +85,6 @@ module Api
         else
           occurences = recurring ? 12 : 1
           errors = []
-          puts occurences.inspect
           occurences.times do |index|
             entry = Entry.create(team_id: team_id,
               user_id: user_id,

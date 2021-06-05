@@ -61,7 +61,6 @@ class Summary < SlackRubyBot::Commands::Base
 
   def self.summary_attachments entries, range
     attachments = []
-    puts range.inspect
     (range).each do |date|
       relevant_entries = entries.select{|entry| entry.start_date.to_date <= date && entry.end_date.to_date >= date}
       users = relevant_entries.map{|entry| ["<@#{entry.user_id}>", entry.entry_type, entry]}
