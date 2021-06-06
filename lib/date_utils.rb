@@ -30,18 +30,18 @@ class DateUtils
       day = extract_date_from_match matches[0] || Date.today
       from = extract_hours_and_minutes_from_string matches[1][2]
       to = extract_hours_and_minutes_from_string matches[2][2]
-      [DateTime.civil_from_format(:local, day.year, day.month, day.day, from[0], from[1]),
-        DateTime.civil_from_format(:local, day.year, day.month, day.day, to[0], to[1])]
+      [Time.zone.local(day.year, day.month, day.day, from[0], from[1], 0).to_datetime,
+        Time.zone.local(day.year, day.month, day.day, to[0], to[1], 0).to_datetime]
     elsif matches.size == 2
       day = Date.today
       from = extract_hours_and_minutes_from_string matches[0][2]
       to = extract_hours_and_minutes_from_string matches[1][2]
-      [DateTime.civil_from_format(:local, day.year, day.month, day.day, from[0], from[1]),
-        DateTime.civil_from_format(:local, day.year, day.month, day.day, to[0], to[1])]
+      [Time.zone.local(day.year, day.month, day.day, from[0], from[1], 0).to_datetime,
+        Time.zone.local(day.year, day.month, day.day, to[0], to[1], 0).to_datetime]
     elsif matches.size == 1
-      now = DateTime.current
+      now = Time.zone.local.to_datetime
       to = extract_hours_and_minutes_from_string matches[0][2]
-      [now, DateTime.civil_from_format(:local, now.year, now.month, now.day, to[0], to[1])]
+      [now, Time.zone.local(now.year, now.month, now.day, to[0], to[1], 0).to_datetime]
     end
   end
 
