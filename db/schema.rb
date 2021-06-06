@@ -10,34 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_16_181558) do
+ActiveRecord::Schema.define(version: 20200516181558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "entries", id: :serial, force: :cascade do |t|
-    t.string "team_id"
-    t.string "user_id"
-    t.string "entry_type"
+  create_table "entries", force: :cascade do |t|
+    t.string   "team_id"
+    t.string   "user_id"
+    t.string   "entry_type"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "am", default: true, null: false
-    t.boolean "pm", default: true, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "am",         default: true, null: false
+    t.boolean  "pm",         default: true, null: false
   end
 
-  create_table "teams", id: :serial, force: :cascade do |t|
-    t.string "team_id"
-    t.string "name"
-    t.boolean "active", default: true
-    t.string "domain"
-    t.string "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "bot_user_id"
-    t.string "activated_user_id"
-    t.string "activated_user_access_token"
+  create_table "teams", force: :cascade do |t|
+    t.string   "team_id"
+    t.string   "name"
+    t.boolean  "active",                      default: true
+    t.string   "domain"
+    t.string   "token"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "bot_user_id"
+    t.string   "activated_user_id"
+    t.string   "activated_user_access_token"
   end
 
 end
