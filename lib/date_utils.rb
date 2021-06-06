@@ -25,7 +25,6 @@ class DateUtils
   end
 
   def self.extract_date_and_times_from_matches matches
-    Time.zone = "Europe/Brussels"
     if matches.size == 3
       day = extract_date_from_match matches[0] || Date.today
       from = extract_hours_and_minutes_from_string matches[1][2]

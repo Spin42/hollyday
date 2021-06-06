@@ -8,7 +8,7 @@ class Entries < SlackRubyBot::Commands::Base
     entries = Entry.where(
       team_id: data.team,
       user_id: data.user).where(
-      "(start_date >= ? OR end_date >= ?)", DateTime.now.beginning_of_day.utc, DateTime.now.beginning_of_day.utc)
+      "(start_date >= ? OR end_date >= ?)", DateTime.now.beginning_of_day, DateTime.now.beginning_of_day)
       .order(:start_date)
 
     if entries.any?
@@ -62,7 +62,7 @@ class Entries < SlackRubyBot::Commands::Base
     elsif type == "afk"
       "On #{start_date.strftime(DateUtils::LONG_FORMAT)} from #{start_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)} to #{end_date.in_time_zone("Europe/Brussels").strftime(DateUtils::TIME)}"
     else
-      "From #{start_date.strftime(DateUtils::LONG_FORMAT)} to #{end_date.strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
+      "From #{start_date.in_time_zone("Europe/Brussels").strftime(DateUtils::LONG_FORMAT)} to #{end_date.in_time_zone("Europe/Brussels").strftime(DateUtils::LONG_FORMAT)} #{am_pm_suffix}"
     end
   end
 end
