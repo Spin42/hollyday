@@ -28,5 +28,8 @@ Holly also reacts to the wfh command by listening on any channels she was invite
 ### Contributing
 Just fork it and send pull requests. We will review them.
 
+### Version
+1.1
+
 ### License
 [MIT](https://github.com/Spin42/hollyday/blob/master/LICENSE)
