@@ -107,6 +107,8 @@ GEM
     newrelic_rpm (9.2.2)
     nokogiri (1.15.1-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.1-x86_64-linux)
+      racc (~> 1.4)
     otr-activerecord (1.2.7)
       activerecord (>= 4.0, < 5.3)
       hashie-forbidden_attributes (~> 0.1)
@@ -181,6 +183,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   actionview (~> 5.2.4.2)
