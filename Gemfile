@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "3.1.4"
+ruby "2.7.8"
 
 gem 'activerecord', '~> 5.2', require: 'active_record'
 gem 'activesupport'

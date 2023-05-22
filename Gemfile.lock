@@ -26,9 +26,9 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
-    async (2.5.1)
+    async (1.31.0)
       console (~> 1.10)
-      io-event (~> 1.1)
+      nio4r (~> 2.3)
       timers (~> 4.1)
     awesome_print (1.9.2)
     builder (3.2.4)
@@ -83,7 +83,6 @@ GEM
       hashie (>= 3.0)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
-    io-event (1.2.2)
     json (2.6.3)
     kaminari-core (1.2.2)
     kaminari-grape (1.0.1)
@@ -94,6 +93,7 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     method_source (1.0.0)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     multi_json (1.15.0)
     multipart-post (2.3.0)
@@ -105,7 +105,9 @@ GEM
       newrelic_rpm
       slack-ruby-bot (>= 0.10.5)
     newrelic_rpm (9.2.2)
-    nokogiri (1.15.1-x86_64-darwin)
+    nio4r (2.5.9)
+    nokogiri (1.15.1)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nokogiri (1.15.1-x86_64-linux)
       racc (~> 1.4)
@@ -186,7 +188,7 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
-  x86_64-darwin-22
+  ruby
   x86_64-linux
 
 DEPENDENCIES
@@ -209,7 +211,7 @@ DEPENDENCIES
   unicorn
 
 RUBY VERSION
-   ruby 3.1.4p223
+   ruby 2.7.8p225
 
 BUNDLED WITH
-   2.4.13
+   2.1.4
