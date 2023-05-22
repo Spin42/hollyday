@@ -22,6 +22,11 @@ ActiveRecord::Base.establish_connection(
 
 NewRelic::Agent.manual_start
 
+SlackRubyBotServer.configure do |config|
+  config.oauth_version = :v1
+  config.oauth_scope = ['bot']
+end
+
 SlackRubyBotServer::App.instance.prepare!
 SlackRubyBotServer::Service.start!
 

@@ -22,42 +22,6 @@ module Api
                 data.channel = event[:channel]
                 Summary.call(nil, data, {expression: event[:text].partition("summary").last})
               end
-              if match.first == "help"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Help.call(nil, data, {expression: event[:text].partition("help").last})
-              end
-              if match.first == "wfh"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Wfh.call(nil, data, {expression: event[:text].partition("wfh").last})
-              end
-              if match.first == "pto"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Pto.call(nil, data, {expression: event[:text].partition("pto").last})
-              end
-              if match.first == "afk"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Afk.call(nil, data, {expression: event[:text].partition("afk").last})
-              end
-              if match.first == "entries"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Entries.call(nil, data, {expression: event[:text].partition("entries").last})
-              end
-              if match.first == "sick"
-                data = DataObject.new()
-                data.team = event[:team]
-                data.channel = event[:channel]
-                Sick.call(nil, data, {expression: event[:text].partition("sick").last})
-              end
             else
               error!("Event #{params[:type]} is not supported.", 404)
             end
