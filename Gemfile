@@ -14,6 +14,7 @@ gem 'unicorn'
 gem 'dotenv'
 gem "json"
 gem "rake"
+gem "pagy_cursor"
 gem 'standalone_migrations', '~> 5.2'
 gem "awesome_print"
 gem "nokogiri", ">= 1.10.4"
