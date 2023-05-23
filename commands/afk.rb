@@ -7,7 +7,7 @@ class Afk < SlackRubyBot::Commands::Base
 
     matches = []
     if _match[:expression]
-      matches = _match[:expression].downcase.scan(Regexp::DAYS_AND_TIMES)
+      matches = _match[:expression].downcase.scan(Regexp::TIMES)
     end
 
     if matches.any?

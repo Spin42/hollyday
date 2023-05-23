@@ -5,5 +5,6 @@ class Regexp
   ENTRY_TYPE_DAYS_AND_MONTHS = /(pto|wfh|sick|afk)|\@(\w+)|(january|february|march|april|may|june|july|august|september|october|november|december)|(monday|tuesday|wednesday|thursday|friday|tomorrow|today)/
   AM_PM = /(morning|afternoon|am|pm)/
   DAYS_AND_TIMES = /(monday|tuesday|wednesday|thursday|friday|tomorrow|today)|(\d{1,2}\/\d{1,2})|(\d{1,2}:?\d{2}?)/
+  TIMES = /(\d{1,2}:?\d{2}?)/
   RECURRENT = /(every)/
 end
